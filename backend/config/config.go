@@ -13,6 +13,9 @@ type EnvConfig struct {
 	DBUser     string `env:"DB_USER,required"`
 	DBPassword string `env:"DB_PASSWORD,required"`
 	DBSSLMode  string `env:"DB_SSLMODE,required"`
+	DBPort     string `env:"DB_PORT,required"`
+	APPName    string `env:"APPNAME,required"`
+	SVHeader   string `env:"SERVERHEADER,required"`
 }
 
 func NewEnvConfig() *EnvConfig {

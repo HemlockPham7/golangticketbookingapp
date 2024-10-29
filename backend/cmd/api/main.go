@@ -15,8 +15,8 @@ func main() {
 	db := db.Init(envConfig, db.DBMigrator)
 
 	app := fiber.New(fiber.Config{
-		AppName:      "TicketBooking",
-		ServerHeader: "Fiber",
+		AppName:      envConfig.APPName,
+		ServerHeader: envConfig.SVHeader,
 	})
 
 	// Repositories
