@@ -2,11 +2,13 @@ package handlers
 
 import (
 	"context"
+	"fmt"
 	"strconv"
 	"time"
 
 	"github.com/HemlockPham7/backend/models"
 	"github.com/gofiber/fiber/v2"
+	"github.com/skip2/go-qrcode"
 )
 
 type TicketHandler struct {
@@ -62,11 +64,26 @@ func (h *TicketHandler) GetOne(ctx *fiber.Ctx) error {
 		})
 	}
 
+	var QRCode []byte
+	QRCode, err = qrcode.Encode(
+		fmt.Sprintf("ticketId:%v,ownerId:%v", ticketId, userId),
+		qrcode.Medium,
+		256,
+	)
+
+	if err != nil {
+		return ctx.Status(fiber.StatusBadRequest).JSON(&fiber.Map{
+			"status":  "fail",
+			"message": err.Error(),
+		})
+	}
+
 	return ctx.Status(fiber.StatusOK).JSON(&fiber.Map{
 		"status":  "success",
 		"message": "",
 		"data": &fiber.Map{
 			"ticket": ticket,
+			"qrcode": QRCode,
 		},
 	})
 }
