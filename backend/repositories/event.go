@@ -55,7 +55,7 @@ func (r *EventRepository) GetOne(ctx context.Context, eventId string) (*models.E
 }
 
 func (r *EventRepository) CreateOne(ctx context.Context, event *models.Event) (*models.Event, error) {
-	res := r.db.Create(&event)
+	res := r.db.Model(event).Create(event)
 
 	if res.Error != nil {
 		return nil, res.Error
